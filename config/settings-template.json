@@ -1,0 +1,68 @@
+{
+    "clienttoken": "",
+    "clientname": "",
+    "clientid": "",
+    "TestingServerID": "",
+    "clientavatar":"",
+    "developerID": [""],
+    "colorthemecode":"#FF5733",
+    "randomMessages_Cooldown": ["Slow It Down Fam...", "Spam Isn't Cool Fam....", "Get Premium dude...", "Never Gonna Let You Down","Subscribe To ChisVR"],
+    "walletnodes": {
+      "znz": {
+        "user": "",
+        "pass": "",
+        "ip": "127.0.0.1",
+        "port": "26000" 
+      },
+      "pivx": {
+        "user": "",
+        "pass": "",
+        "ip": "127.0.0.1",
+        "port": "26001" 
+      },
+      "fls": {
+        "user": "",
+        "pass": "",
+        "ip": "127.0.0.1",
+        "port": "26002" 
+      },
+      "dogec": {
+        "user": "",
+        "pass": "",
+        "ip": "127.0.0.1",
+        "port": "26003" 
+      }
+    },
+    "sql": {
+      "host": "127.0.0.1",
+      "user": "",
+      "password": "",
+      "database": "",
+      "toggle": true
+    },
+    "owners": {
+      "owner_id": "",
+      "owner_user": "",
+      "owner_tag": "",
+      "social": {
+        "twitch": "",
+        "instagram": "",
+        "twitter": "",
+        "hive": "",
+        "vimm": "",
+        "glimesh": "",
+        "dlive": "",
+        "trovo": "",
+        "youtube": {
+          "channelid": "",
+          "customurl": ""
+        },
+        "theta": ""
+      }
+    },
+    "roles": {
+      "mod_role": "",
+      "nitroboost_role": "",
+      "guild_id": ""
+    }
+  }
