@@ -13,7 +13,7 @@ module.exports = {
         const connection = client.sqlconn;
         connection.query(`SELECT * FROM profile_wallet WHERE userid='${interaction.user.id}'`, async function(err, results) {
             if (results.length === 0) {
-                return interaction.reply({ ephemeral: true, content: 'You dont have a Wallet, Please do `/createwallet` to Create Address and Balance and Staking'})
+                return interaction.followUp({ ephemeral: true, content: 'You dont have a Wallet, Please do `/createwallet` to Create Address and Balance and Staking'})
             } else {
                 const buttonVerify = new MessageActionRow()
                 .addComponents(

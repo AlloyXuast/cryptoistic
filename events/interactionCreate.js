@@ -182,6 +182,13 @@ client.on("interactionCreate", async (interaction) => {
 
                      console.log("[AUTOMOD] Wallet Addresse been Addded to Database");
                   })
+
+                  connection.query(`
+                     INSERT INTO profile_walletbal SET userid = '${interaction.user.id}', znz = '0', pivx = '0', dogec='0', fls='0'`, err => {
+                     if (err) throw err;
+
+                     console.log("[AUTOMOD] Wallet Balance been Addded to Database");
+                  })
                } else {
                   await interaction.reply({ ephemeral: true, content: 'You already have Wallet, Please do `/wallet` See your Address and Balance and Staking'})
                }
