@@ -3,6 +3,7 @@ const RPCClient = require('@jskitty/bitcoin-rpc');
 const express = require('express')
 const app = express()
 const http = require('http');
+const fetch = require('node-fetch');
 const port = 3310;
 
 client.on("ready", async () => {
