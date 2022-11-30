@@ -19,11 +19,12 @@ module.exports = {
  
     run: async (client, interaction, args) => {
  
-			let pivx = new RPCClient(client.config.walletnodes.pivx.user, client.config.walletnodes.pivx.pass, client.config.walletnodes.pivx.ip, client.config.walletnodes.pivx.port);
-        let znz = new RPCClient(client.config.walletnodes.znz.user, client.config.walletnodes.znz.pass, client.config.walletnodes.znz.ip, client.config.walletnodes.znz.port);
-        let dogec = new RPCClient(client.config.walletnodes.dogec.user, client.config.walletnodes.dogec.pass, client.config.walletnodes.dogec.ip, client.config.walletnodes.dogec.port);
-        let fls = new RPCClient(client.config.walletnodes.fls.user, client.config.walletnodes.fls.pass, client.config.walletnodes.fls.ip, client.config.walletnodes.fls.port);
-        
+	    let pivx = new RPCClient(client.config.walletnodes.pivx.user, client.config.walletnodes.pivx.pass, client.config.walletnodes.pivx.ip, client.config.walletnodes.pivx.port);
+            let znz = new RPCClient(client.config.walletnodes.znz.user, client.config.walletnodes.znz.pass, client.config.walletnodes.znz.ip, client.config.walletnodes.znz.port);
+            let dogec = new RPCClient(client.config.walletnodes.dogec.user, client.config.walletnodes.dogec.pass, client.config.walletnodes.dogec.ip, client.config.walletnodes.dogec.port);
+            let fls = new RPCClient(client.config.walletnodes.fls.user, client.config.walletnodes.fls.pass, client.config.walletnodes.fls.ip, client.config.walletnodes.fls.port);
+            let monk = new RPCClient(client.config.walletnodes.monk.user, client.config.walletnodes.monk.pass, client.config.walletnodes.monk.ip, client.config.walletnodes.monk.port);
+	    let owo = new RPCClient(client.config.walletnodes.owo.user, client.config.walletnodes.owo.pass, client.config.walletnodes.owo.ip, client.config.walletnodes.owo.port);
             if (interaction.options.getString('type') == "znz") {
 
                 const globalres = await fetch('https://chainz.cryptoid.info/znz/api.dws?q=getblockcount');
@@ -164,8 +165,78 @@ module.exports = {
                     interaction.followUp({ embeds: [embed1] });
                     
                 }
+            } else if (interaction.options.getString('type') == "monk") {
+
+                const globalres = await fetch('https://explorer.decenomy.net/coreapi/v1/coins/MONK/blocks?perPage=1&page=1');
+                const globaldata = await globalres.json();
+    
+                const ourdata = await monk.call('getblockchaininfo');
+    
+                if (ourdata.blocks == globaldata.response[0].height) {
+                    let embed1 = new MessageEmbed()
+                    embed1.setAuthor("MONK WALLET NODE", `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.png`)
+                    embed1.addField("Global NODE BLOCK", `${globaldata.response[0].height}`)
+                    embed1.addField("OUR NODE BLOCK", `${ourdata.blocks}`) 
+                    embed1.addField("MATCH", `TRUE`)
+                    embed1.setColor("GREEN");
+                    interaction.followUp({ embeds: [embed1] });
+                } else if (globaldata.response[0].height - ourdata.blocks < -1) {
+                    let embed1 = new MessageEmbed()
+                    embed1.setAuthor("MONK WALLET NODE", `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.png`)
+                    embed1.addField("Global NODE BLOCK", `${globaldata.response[0].height}`)
+                    embed1.addField("OUR NODE BLOCK", `${ourdata.blocks}`) 
+                    embed1.addField("MATCH", `TRUE`)
+                    embed1.setColor("GREEN");
+                    interaction.followUp({ embeds: [embed1] });
+                } else {
+                    let embed1 = new MessageEmbed()
+                    embed1.setAuthor("MONK WALLET NODE", `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.png`)
+                    embed1.addField("Global NODE BLOCK", `${globaldata.response[0].height}`)
+                    embed1.addField("OUR NODE BLOCK", `${ourdata.blocks}`) 
+                    embed1.addField("MATCH", `FALSE`)
+                    embed1.addField("BLOCKS BEHIND", `${globaldata.response[0].height - ourdata.blocks}`)
+                    embed1.addField("PROGRESS", `${(100.0 * ourdata.blocks / globaldata.response[0].height).toFixed(2)}%`)
+                    embed1.setColor("RED");
+                    interaction.followUp({ embeds: [embed1] });
+                    
+                }
+            } else if (interaction.options.getString('type') == "owo") {
+
+                const globalres = await fetch('https://explorer.decenomy.net/coreapi/v1/coins/OWO/blocks?perPage=1&page=1');
+                const globaldata = await globalres.json();
+    
+                const ourdata = await owo.call('getblockchaininfo');
+    
+                if (ourdata.blocks == globaldata.response[0].height) {
+                    let embed1 = new MessageEmbed()
+                    embed1.setAuthor("OWO WALLET NODE", `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.png`)
+                    embed1.addField("Global NODE BLOCK", `${globaldata.response[0].height}`)
+                    embed1.addField("OUR NODE BLOCK", `${ourdata.blocks}`) 
+                    embed1.addField("MATCH", `TRUE`)
+                    embed1.setColor("GREEN");
+                    interaction.followUp({ embeds: [embed1] });
+                } else if (globaldata.response[0].height - ourdata.blocks < -1) {
+                    let embed1 = new MessageEmbed()
+                    embed1.setAuthor("OWO WALLET NODE", `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.png`)
+                    embed1.addField("Global NODE BLOCK", `${globaldata.response[0].height}`)
+                    embed1.addField("OUR NODE BLOCK", `${ourdata.blocks}`) 
+                    embed1.addField("MATCH", `TRUE`)
+                    embed1.setColor("GREEN");
+                    interaction.followUp({ embeds: [embed1] });
+                } else {
+                    let embed1 = new MessageEmbed()
+                    embed1.setAuthor("OWO WALLET NODE", `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}.png`)
+                    embed1.addField("Global NODE BLOCK", `${globaldata.response[0].height}`)
+                    embed1.addField("OUR NODE BLOCK", `${ourdata.blocks}`) 
+                    embed1.addField("MATCH", `FALSE`)
+                    embed1.addField("BLOCKS BEHIND", `${globaldata.response[0].height - ourdata.blocks}`)
+                    embed1.addField("PROGRESS", `${(100.0 * ourdata.blocks / globaldata.response[0].height).toFixed(2)}%`)
+                    embed1.setColor("RED");
+                    interaction.followUp({ embeds: [embed1] });
+                    
+                }
             } else {
-                interaction.followUp({ content: "WRONG COMMAND, List: `znz|dogec|fls|pivx`"});
+                interaction.followUp({ content: "WRONG COMMAND, List: `znz|dogec|fls|pivx|monk|owo`"});
             }
     },
  };
