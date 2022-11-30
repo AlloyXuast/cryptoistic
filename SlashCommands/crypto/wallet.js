@@ -42,10 +42,10 @@ module.exports = {
                 var walletflscoldstakingamount = await fls.call('getcoldstakingbalance', interaction.user.id);
                 
                 var walletmonkaddress = await monk.call('getaddressesbylabel', interaction.user.id);
-                var walletmonkamount = await monk.call('getbalance', interaction.user.id);
+                var walletmonkamount = await monk.call('getreceivedbylabel', interaction.user.id);
                 
                 var walletowoaddress = await owo.call('getaddressesbylabel', interaction.user.id);
-                var walletowoamount = await owo.call('getbalance', interaction.user.id);
+                var walletowoamount = await owo.call('getreceivedbylabel', interaction.user.id);
 
                 let embed = new MessageEmbed();
                 embed.setColor(0x9900FF)
