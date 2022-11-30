@@ -10,24 +10,36 @@ client.on("ready", async () => {
     let node = {
         "znz": { 
             status: "offline",
+            synced: false,
+            behind: 0,
+            progress: "0%",
             blocks: 0,
             peers: 0,
             lastuptime: 0
         },
         "pivx": { 
             status: "offline",
+            synced: false,
+            behind: 0,
+            progress: "0%",
             blocks: 0,
             peers: 0,
             lastuptime: 0
         },
         "fls": { 
             status: "offline",
+            synced: false,
+            behind: 0,
+            progress: "0%",
             blocks: 0,
             peers: 0,
             lastuptime: 0
         },
         "dogec": { 
             status: "offline",
+            synced: false,
+            behind: 0,
+            progress: "0%",
             blocks: 0,
             peers: 0,
             lastuptime: 0
@@ -39,6 +51,18 @@ client.on("ready", async () => {
     const RPCFLS = new RPCClient(client.config.walletnodes.fls.user, client.config.walletnodes.fls.pass, client.config.walletnodes.fls.ip, client.config.walletnodes.fls.port)
     const RPCDOGEC = new RPCClient(client.config.walletnodes.dogec.user, client.config.walletnodes.dogec.pass, client.config.walletnodes.dogec.ip, client.config.walletnodes.dogec.port)
 
+    const globalresznz = await fetch('https://chainz.cryptoid.info/znz/api.dws?q=getblockcount');
+    const globaldataznz = await globalresznz.text();
+    
+    const globalresdogec = await fetch('https://dogec.flitswallet.app/api/v1/');
+    const globaldatadogec = await globalresdogec.json();
+    
+    const globalresfls = await fetch('https://fls.flitswallet.app/api/v1/');
+    const globaldatafls = await globalresfls.json();
+    
+    const globalrespivx = await fetch('https://pivx.flitswallet.app/api/v1/');
+    const globaldatapivx = await globalrespivx.json();
+    
     app.get('/', (req, res) => {
         res.header("Access-Control-Allow-Origin", "*");
         res.send("NODE WALLET API UP");
@@ -131,6 +155,19 @@ client.on("ready", async () => {
       function updateRPCDOGEC() {
         if (node.dogec.status === "online") {
           RPCDOGEC.call('getblockcount').then(blocks => {
+            if (blocks == globaldatadogec.backend.blocks) {
+                node.dogec.synced = true
+                node.dogec.behind = 0
+                node.dogec.progress = "100%"
+            } else if (globaldatadogec.backend.blocks - blocks < -1) {
+                node.dogec.synced = true
+                node.dogec.behind = 0
+                node.dogec.progress = "100%"
+            } else {
+                node.dogec.synced = false
+                node.dogec.behind = globaldatadogec.backend.blocks - blocks
+                node.dogec.progress = (100.0 * blocks / globaldatadogec.backend.blocks).toFixed(2)
+            }
             node.dogec.blocks = blocks
             RPCDOGEC.call('getconnectioncount').then(conns => {
               node.dogec.lastuptime = Math.floor(Date.now() / 1000);
@@ -167,6 +204,19 @@ client.on("ready", async () => {
       function updateRPCFLS() {
         if (node.fls.status === "online") {
           RPCFLS.call('getblockcount').then(blocks => {
+            if (blocks == globaldatafls.backend.blocks) {
+                node.fls.synced = true
+                node.fls.behind = 0
+                node.fls.progress = "100%"
+            } else if (globaldatafls.backend.blocks - blocks < -1) {
+                node.fls.synced = true
+                node.fls.behind = 0
+                node.fls.progress = "100%"
+            } else {
+                node.fls.synced = false
+                node.fls.behind = globaldatafls.backend.blocks - blocks
+                node.fls.progress = (100.0 * blocks / globaldatafls.backend.blocks).toFixed(2)
+            }
             node.fls.blocks = blocks
             RPCFLS.call('getconnectioncount').then(conns => {
               node.fls.lastuptime = Math.floor(Date.now() / 1000);
@@ -200,6 +250,19 @@ client.on("ready", async () => {
       function updateRPCPIVX() {
         if (node.pivx.status === "online") {
           RPCPIVX.call('getblockcount').then(blocks => {
+            if (blocks == globaldatapivx.backend.blocks) {
+                node.pivx.synced = true
+                node.pivx.behind = 0
+                node.pivx.progress = "100%"
+            } else if (globaldatapivx.backend.blocks - blocks < -1) {
+                node.pivx.synced = true
+                node.pivx.behind = 0
+                node.pivx.progress = "100%"
+            } else {
+                node.pivx.synced = false
+                node.pivx.behind = globaldatapivx.backend.blocks - blocks
+                node.pivx.progress = (100.0 * blocks / globaldatapivx.backend.blocks).toFixed(2)
+            }
             node.pivx.blocks = blocks
             RPCPIVX.call('getconnectioncount').then(conns => {
               node.pivx.lastuptime = Math.floor(Date.now() / 1000);
@@ -233,6 +296,19 @@ client.on("ready", async () => {
       function updateRPCZNZ() {
         if (node.znz.status === "online") {
           RPCZNZ.call('getblockcount').then(blocks => {
+            if (blocks == globaldataznz) {
+                node.znz.synced = true
+                node.znz.behind = 0
+                node.znz.progress = "100%"
+            } else if (globaldataznz - blocks < -1) {
+                node.znz.synced = true
+                node.znz.behind = 0
+                node.znz.progress = "100%"
+            } else {
+                node.znz.synced = false
+                node.znz.behind = globaldataznz - blocks
+                node.znz.progress = (100.0 * blocks / globaldataznz).toFixed(2)
+            }
             node.znz.blocks = blocks
             RPCZNZ.call('getconnectioncount').then(conns => {
               node.znz.lastuptime = Math.floor(Date.now() / 1000);
