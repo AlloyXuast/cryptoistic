@@ -8,7 +8,8 @@ let pivx = new RPCClient(client.config.walletnodes.pivx.user, client.config.wall
 let znz = new RPCClient(client.config.walletnodes.znz.user, client.config.walletnodes.znz.pass, client.config.walletnodes.znz.ip, client.config.walletnodes.znz.port);
 let dogec = new RPCClient(client.config.walletnodes.dogec.user, client.config.walletnodes.dogec.pass, client.config.walletnodes.dogec.ip, client.config.walletnodes.dogec.port);
 let fls = new RPCClient(client.config.walletnodes.fls.user, client.config.walletnodes.fls.pass, client.config.walletnodes.fls.ip, client.config.walletnodes.fls.port);
-
+let monk = new RPCClient(client.config.walletnodes.monk.user, client.config.walletnodes.monk.pass, client.config.walletnodes.monk.ip, client.config.walletnodes.monk.port);
+let owo = new RPCClient(client.config.walletnodes.owo.user, client.config.walletnodes.owo.pass, client.config.walletnodes.owo.ip, client.config.walletnodes.owo.port);
 
 const { developerID } = require("../config/settings.json");
 const { clientavatar } = require("../config/settings.json");
@@ -163,11 +164,16 @@ client.on("interactionCreate", async (interaction) => {
 
                   var walletfls = await fls.call('getnewaddress', interaction.user.id);
                   var cswalletfls = await fls.call('getnewstakingaddress', interaction.user.id);
+                  
+                  var walletmonk = await monk.call('getnewaddress', interaction.user.id);
+                  var walletowo = await owo.call('getnewaddress', interaction.user.id);
 
                   console.log(`PIVX:\nUSER: ${interaction.user.id}\nWALLET: ${walletpivx}\nCOLDSTAKING ADDRESS: ${cswalletpivx}`)
                   console.log(`ZNZ:\nUSER: ${interaction.user.id}\nWALLET: ${walletznz}\nCOLDSTAKING ADDRESS: ${cswalletznz}`)
                   console.log(`DOGEC:\nUSER: ${interaction.user.id}\nWALLET: ${walletdogec}\nCOLDSTAKING ADDRESS: ${cswalletdogec}`)
                   console.log(`FLS:\nUSER: ${interaction.user.id}\nWALLET: ${walletfls}\nCOLDSTAKING ADDRESS: ${cswalletfls}`)
+                  console.log(`MONK:\nUSER: ${interaction.user.id}\nWALLET: ${walletmonk}`)
+                  console.log(`OWO:\nUSER: ${interaction.user.id}\nWALLET: ${walletowo}`)
 
                   connection.query(`
                      INSERT INTO profile_coldstakingwallet SET userid = '${interaction.user.id}', znz = '${cswalletznz}', pivx = '${cswalletpivx}', dogec='${cswalletdogec}', fls='${cswalletfls}'`,  err => {
@@ -177,14 +183,14 @@ client.on("interactionCreate", async (interaction) => {
                   });
 
                   connection.query(`
-                     INSERT INTO profile_wallet SET userid = '${interaction.user.id}', znz = '${walletznz}', pivx = '${walletpivx}', dogec='${walletdogec}', fls='${walletfls}'`, err => {
+                     INSERT INTO profile_wallet SET userid = '${interaction.user.id}', znz = '${walletznz}', pivx = '${walletpivx}', dogec='${walletdogec}', fls='${walletfls}', monk='${walletmonk}', owo='${walletowo}'`, err => {
                      if (err) throw err;
 
                      console.log("[AUTOMOD] Wallet Addresse been Addded to Database");
                   })
 
                   connection.query(`
-                     INSERT INTO profile_walletbal SET userid = '${interaction.user.id}', znz = '0', pivx = '0', dogec='0', fls='0'`, err => {
+                     INSERT INTO profile_walletbal SET userid = '${interaction.user.id}', znz = '0', pivx = '0', dogec='0', fls='0', monk='0', owo='0'`, err => {
                      if (err) throw err;
 
                      console.log("[AUTOMOD] Wallet Balance been Addded to Database");
