@@ -41,10 +41,10 @@ module.exports = {
                 var walletflsamount = await fls.call('getbalance', interaction.user.id);
                 var walletflscoldstakingamount = await fls.call('getcoldstakingbalance', interaction.user.id);
                 
-                var walletmonkaddress = await monk.call('getaddressesbyaccount', interaction.user.id);
+                var walletmonkaddress = await monk.call('getaddressesbylabel', interaction.user.id);
                 var walletmonkamount = await monk.call('getbalance', interaction.user.id);
                 
-                var walletowoaddress = await owo.call('getaddressesbyaccount', interaction.user.id);
+                var walletowoaddress = await owo.call('getaddressesbylabel', interaction.user.id);
                 var walletowoamount = await owo.call('getbalance', interaction.user.id);
 
                 let embed = new MessageEmbed();
