@@ -129,6 +129,8 @@ client.on("interactionCreate", async (interaction) => {
                   var exportznz = await znz.call('dumpprivkey', results[0].znz);
                   var exportdogec = await dogec.call('dumpprivkey', results[0].dogec);
                   var exportfls = await fls.call('dumpprivkey', results[0].fls);
+                  var exportmonk = await monk.call('dumpprivkey', results[0].monk);
+                  var exportowo = await owo.call('dumpprivkey', results[0].owo);
 
                   let embed = new MessageEmbed();
                   embed.setColor(0x9900FF)
@@ -137,7 +139,9 @@ client.on("interactionCreate", async (interaction) => {
                     `PIVX WALLET:\n**${exportpivx}**\n\n` +
                     `ZENZO WALLET:\n**${exportznz}**\n\n` +
                     `DOGECASH WALLET:\n**${exportdogec}**\n\n` +
-                    `FLITS WALLET:\n**${exportfls}**\n\n`
+                    `FLITS WALLET:\n**${exportfls}**\n\n` +
+                    `MONK WALLET:\n**${exportmonk}**\n\n` +
+                    `OWO WALLET:\n**${exportowo}**\n\n`
                   )
                   embed.setFooter("Requested by " + interaction.user.username, client.user.avatarURL)
                   embed.setTimestamp()
