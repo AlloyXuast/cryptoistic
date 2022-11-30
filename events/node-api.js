@@ -209,7 +209,7 @@ client.on("ready", async () => {
             } else {
                 node.dogec.synced = false
                 node.dogec.behind = globaldatadogec.backend.blocks - blocks
-                node.dogec.progress = (100.0 * blocks / globaldatadogec.backend.blocks).toFixed(2)
+                node.dogec.progress = (100.0 * blocks / globaldatadogec.backend.blocks).toFixed(2)+"%"
             }
             node.dogec.blocks = blocks
             RPCDOGEC.call('getconnectioncount').then(conns => {
@@ -258,7 +258,7 @@ client.on("ready", async () => {
             } else {
                 node.fls.synced = false
                 node.fls.behind = globaldatafls.backend.blocks - blocks
-                node.fls.progress = (100.0 * blocks / globaldatafls.backend.blocks).toFixed(2)
+                node.fls.progress = (100.0 * blocks / globaldatafls.backend.blocks).toFixed(2)+"%"
             }
             node.fls.blocks = blocks
             RPCFLS.call('getconnectioncount').then(conns => {
@@ -304,7 +304,7 @@ client.on("ready", async () => {
             } else {
                 node.pivx.synced = false
                 node.pivx.behind = globaldatapivx.backend.blocks - blocks
-                node.pivx.progress = (100.0 * blocks / globaldatapivx.backend.blocks).toFixed(2)
+                node.pivx.progress = (100.0 * blocks / globaldatapivx.backend.blocks).toFixed(2)+"%"
             }
             node.pivx.blocks = blocks
             RPCPIVX.call('getconnectioncount').then(conns => {
@@ -350,7 +350,7 @@ client.on("ready", async () => {
             } else {
                 node.znz.synced = false
                 node.znz.behind = globaldataznz - blocks
-                node.znz.progress = (100.0 * blocks / globaldataznz).toFixed(2)
+                node.znz.progress = (100.0 * blocks / globaldataznz).toFixed(2)+"%"
             }
             node.znz.blocks = blocks
             RPCZNZ.call('getconnectioncount').then(conns => {
@@ -401,7 +401,7 @@ client.on("ready", async () => {
             } else {
                 node.monk.synced = false
                 node.monk.behind = globaldatamonk.response[0].height - blocks
-                node.monk.progress = (100.0 * blocks / globaldatamonk.response[0].height).toFixed(2)
+                node.monk.progress = (100.0 * blocks / globaldatamonk.response[0].height).toFixed(2)+"%"
             }
             node.monk.blocks = blocks
             RPCMONK.call('getconnectioncount').then(conns => {
@@ -450,7 +450,7 @@ client.on("ready", async () => {
             } else {
                 node.owo.synced = false
                 node.owo.behind = globaldataowo.response[0].height - blocks
-                node.owo.progress = (100.0 * blocks / globaldataowo.response[0].height).toFixed(2)
+                node.owo.progress = (100.0 * blocks / globaldataowo.response[0].height).toFixed(2)+"%"
             }
             node.owo.blocks = blocks
             RPCOWO.call('getconnectioncount').then(conns => {
